@@ -26,7 +26,7 @@ wss.on("connection", function (connection) {
     //switching type of the user message
     switch (data.type) {
       case "join":
-        game = games[data.gameCode];
+        var game = games[data.gameCode];
 
         if (game) {
           if (game.players.length === 1 && !game.players[data.name]) {
@@ -54,7 +54,7 @@ wss.on("connection", function (connection) {
         } else {
           console.log("Game created: ", data.gameCode);
 
-          game = { players: {} };
+          var game = { players: {} };
           game.players[data.name] = connection;
           connection.gameCode = data.gameCode;
 
@@ -74,7 +74,7 @@ wss.on("connection", function (connection) {
             `Sending offer from player ${data.name} for ${data.gameCode}`
           );
 
-          otherConnection = otherPlayerConnection(game, data.name);
+          var otherConnection = otherPlayerConnection(game, data.name);
 
           sendTo(otherConnection, {
             type: "offer",
@@ -96,7 +96,7 @@ wss.on("connection", function (connection) {
         if (game && game.players === 2) {
           console.log(`Sending answer from ${data.name} for ${data.gameCode}`);
 
-          otherConnection = otherPlayerConnection(game, data.name);
+          var otherConnection = otherPlayerConnection(game, data.name);
 
           sendTo(otherConnection, {
             type: "answer",
@@ -120,7 +120,7 @@ wss.on("connection", function (connection) {
             `Sending candidate from ${data.name} for ${data.gameCode}`
           );
 
-          otherConnection = otherPlayerConnection(game, data.name);
+          var otherConnection = otherPlayerConnection(game, data.name);
 
           sendTo(otherConnection, {
             type: "candidate",
@@ -142,7 +142,7 @@ wss.on("connection", function (connection) {
         if (game && game.players === 2) {
           console.log(`Player ${data.name} is leaving game ${data.gameCode}`);
 
-          otherConnection = otherPlayerConnection(game, data.name);
+          var otherConnection = otherPlayerConnection(game, data.name);
 
           sendTo(otherConnection, {
             type: "leave",
@@ -173,11 +173,11 @@ wss.on("connection", function (connection) {
     console.log("Hanlding connection closed");
 
     if (connection.gameCode) {
-      const gameCode = connection.gameCode;
+      var gameCode = connection.gameCode;
       console.log(`Connection closed on ${gameCode}`);
 
-      const game = games[gameCode]
-      const playerName = Object.keys(game.players).find(name => {
+      var game = games[gameCode]
+      var playerName = Object.keys(game.players).find(name => {
         return game.players[name] === connection;
       })
       delete game.players[playerName]
@@ -189,7 +189,7 @@ wss.on("connection", function (connection) {
       } else {
         console.log(`Notifying other player ${gameCode}`);
 
-        const otherConnection = otherPlayerConnection(game, playerName)
+        var otherConnection = otherPlayerConnection(game, playerName)
 
         sendTo(otherConnection, {
           type: "leave",
@@ -202,7 +202,7 @@ wss.on("connection", function (connection) {
 });
 
 function otherPlayerConnection(game, playerName) {
-  const otherPlayerName = Object.keys(game.players).find((name) => {
+  var otherPlayerName = Object.keys(game.players).find((name) => {
     return name !== playerName;
   });
 
