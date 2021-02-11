@@ -172,7 +172,7 @@ wss.on("connection", function (connection) {
   connection.on("close", function () {
     console.log("Handling connection closed");
 
-    if (connection.gameCode) {
+    if (connection.gameCode && games[connection.gameCode]) {
       var gameCode = connection.gameCode;
       console.log(`Connection closed on ${gameCode}`);
 
