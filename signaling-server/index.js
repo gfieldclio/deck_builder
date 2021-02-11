@@ -170,7 +170,7 @@ wss.on("connection", function (connection) {
   //when user exits, for example closes a browser window
   //this may help if we are still in "offer","answer" or "candidate" state
   connection.on("close", function () {
-    console.log("Hanlding connection closed");
+    console.log("Handling connection closed");
 
     if (connection.gameCode) {
       var gameCode = connection.gameCode;
@@ -197,8 +197,6 @@ wss.on("connection", function (connection) {
       }
     }
   });
-
-  connection.send("Hello world");
 });
 
 function otherPlayerConnection(game, playerName) {
