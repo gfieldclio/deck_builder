@@ -5,14 +5,14 @@ export default class Loader extends Phaser.Scene {
     super({ key: "Loader" });
   }
 
-  preload() {
+  preload = () => {
     this.load.spritesheet("loader", "src/assets/loader.png", {
       frameWidth: 400,
       frameHeight: 300,
     });
-  }
+  };
 
-  create() {
+  create = () => {
     this.anims.create({
       key: "loading",
       frames: this.anims.generateFrameNumbers("loader"),
@@ -23,12 +23,12 @@ export default class Loader extends Phaser.Scene {
     if (messaging.dataChannelIsOpen) {
       this.scene.start("Game");
     } else {
-      messaging.on('dataChannelOpen', () => {
-        console.log('Release the hounds!');
+      messaging.on("dataChannelOpen", () => {
+        console.log("Release the hounds!");
         this.scene.start("Game");
       });
     }
-  }
+  };
 
-  update() {}
+  update = () => {};
 }

@@ -2,20 +2,20 @@ import messaging from "../messaging";
 
 export default class Login extends Phaser.Scene {
   constructor() {
-    super({key: "Login"});
+    super({ key: "Login" });
   }
 
-  preload() {
+  preload = () => {
     this.load.html("loginForm", "src/assets/text/loginform.html");
-  }
+  };
 
-  create() {
+  create = () => {
     this.element = this.add.dom(640, 600).createFromCache("loginForm");
     window.element = this.element;
 
     this.element.setPerspective(800);
     this.element.addListener("click");
-    this.element.on("click", this.formSubmit.bind(this));
+    this.element.on("click", this.formSubmit);
 
     this.tweens.add({
       targets: this.element,
@@ -23,9 +23,9 @@ export default class Login extends Phaser.Scene {
       duration: 2000,
       ease: "Power3",
     });
-  }
+  };
 
-  formSubmit(event) {
+  formSubmit = (event) => {
     if (event.target.name === "loginButton") {
       let inputUsername = this.element.getChildByName("username");
       let inputGameId = this.element.getChildByName("gameId");
@@ -34,26 +34,43 @@ export default class Login extends Phaser.Scene {
       if (inputUsername.value !== "" && inputGameId.value !== "") {
         //  Turn off the click events
         this.element.removeListener("click");
-        messaging.on("created", this.handleJoin.bind(this));
-        messaging.on("joined", this.handleJoin.bind(this));
+        messaging.on("created", this.handleJoin);
+        messaging.on("joined", this.handleJoin);
         messaging.join(inputGameId.value, inputUsername.value);
       } else {
-        let text = this.element.add.text(10, 10, "Please create a game or join to play", {
-          color: "white",
-          fontFamily: "Arial",
-          fontSize: "32px ",
-        });
+        let text = this.element.add.text(
+          10,
+          10,
+          "Please create a game or join to play",
+          {
+            color: "white",
+            fontFamily: "Arial",
+            fontSize: "32px ",
+          }
+        );
 
         //  Flash the prompt
-        this.tweens.add({ targets: text, alpha: 0.1, duration: 200, ease: "Power3", yoyo: true });
+        this.tweens.add({
+          targets: text,
+          alpha: 0.1,
+          duration: 200,
+          ease: "Power3",
+          yoyo: true,
+        });
       }
     }
-  }
+  };
 
-  handleJoin(event) {
+  handleJoin = (event) => {
     if (event.success) {
       //  Tween the login form out
-      this.tweens.add({ targets: element.rotate3d, x: 1, w: 90, duration: 3000, ease: "Power3" });
+      this.tweens.add({
+        targets: element.rotate3d,
+        x: 1,
+        w: 90,
+        duration: 3000,
+        ease: "Power3",
+      });
 
       this.tweens.add({
         targets: element,
@@ -68,9 +85,12 @@ export default class Login extends Phaser.Scene {
       });
 
       this.cameras.main.fadeOut(1000, 0, 0, 0);
-      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
-        this.scene.start("Loader");
-      });
+      this.cameras.main.once(
+        Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+        (cam, effect) => {
+          this.scene.start("Loader");
+        }
+      );
     } else {
       let text = this.element.add.text(10, 10, "Connection failed", {
         color: "white",
@@ -79,12 +99,17 @@ export default class Login extends Phaser.Scene {
       });
 
       //  Flash the prompt
-      this.tweens.add({ targets: text, alpha: 0.1, duration: 200, ease: "Power3", yoyo: true });
+      this.tweens.add({
+        targets: text,
+        alpha: 0.1,
+        duration: 200,
+        ease: "Power3",
+        yoyo: true,
+      });
 
       this.element.on("click", this.formSubmit.bind(this));
     }
+  };
 
-  }
-
-  update() {}
+  update = () => {};
 }
