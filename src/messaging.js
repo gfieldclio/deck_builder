@@ -1,12 +1,13 @@
 class Messaging {
+  handlers = {};
+
   constructor() {
-    this.handlers = {};
     this.serverConnection = new WebSocket('ws://localhost:9090');
 
-    this.serverConnection.onmessage = this._handleMessage.bind(this);
+    this.serverConnection.onmessage = this._handleMessage;
   }
 
-  on(eventName, handler) {
+  on = (eventName, handler) => {
     if (!this.handlers[eventName]) {
       this.handlers[eventName] = [];
     }
@@ -14,7 +15,7 @@ class Messaging {
     this.handlers[eventName].push(handler);
   };
 
-  off(eventName, handler) {
+  off = (eventName, handler) => {
     if (!this.handlers[eventName]) {
       return;
     }
@@ -24,7 +25,7 @@ class Messaging {
     );
   };
 
-  join(gameCode, name) {
+  join = (gameCode, name) => {
     this.gameCode = gameCode;
     this.name = name;
 
@@ -33,11 +34,11 @@ class Messaging {
     });
   };
 
-  send(data) {
+  send = (data) => {
     this.dataChannel.send(data);
   }
 
-  _handleMessage(message) {
+  _handleMessage = (message) => {
     const data = JSON.parse(message.data);
     console.log('Got message', data);
 
@@ -61,25 +62,21 @@ class Messaging {
     this._broadcast(data.type, data);
   };
 
-  _sendWebRTCOffer() {
-    let offer;
+  _sendWebRTCOffer = async () => {
     this._createWebRTCConnection();
     this.dataChannel = this.peerConnection.createDataChannel('data', { reliable: true });
     this._listenToDataChannel();
-    this.peerConnection.createOffer().then(createdOffer => {
-      offer = createdOffer;
 
-      return this.peerConnection.setLocalDescription(offer);
-    }).then(() => {
-      this._sendToServer({
-        offer,
-        type: 'offer',
-      });
+    const offer = await this.peerConnection.createOffer();
+    await this.peerConnection.setLocalDescription(offer);
+
+    this._sendToServer({
+      offer,
+      type: 'offer',
     });
   };
 
-  _handleWebRTCOffer(offer) {
-    let answer;
+  _handleWebRTCOffer = async (offer) => {
     this._createWebRTCConnection();
     this.peerConnection.onicecandidate = event => {
       console.log('onicecandidate', event);
@@ -92,28 +89,25 @@ class Messaging {
     };
 
     this.peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
-    this.peerConnection.createAnswer().then(createdAnswer => {
-      answer = createdAnswer;
+    const answer = await this.peerConnection.createAnswer();
+    await this.peerConnection.setLocalDescription(answer);
 
-      return this.peerConnection.setLocalDescription(answer)
-    }).then(() => {
-      this._sendToServer({
-        answer,
-        type: 'answer',
-      });
+    this._sendToServer({
+      answer,
+      type: 'answer',
     });
   };
 
-  _handleWebRTCAnswer(answer) {
+  _handleWebRTCAnswer = (answer) => {
     const remoteDesc = new RTCSessionDescription(answer);
     this.peerConnection.setRemoteDescription(remoteDesc);
   }
 
-  _handleWebRTCCandidate(candidate) {
+  _handleWebRTCCandidate = (candidate) => {
     return this.peerConnection.addIceCandidate(candidate);
   }
 
-  _createWebRTCConnection() {
+  _createWebRTCConnection = () => {
     const configuration = {
       iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
     };
@@ -133,7 +127,7 @@ class Messaging {
     });
   };
 
-  _listenToDataChannel() {
+  _listenToDataChannel = () => {
     this.dataChannel.addEventListener('open', event => {
       console.log('dataChannelOpen', event);
       this.dataChannelIsOpen = true;
@@ -146,7 +140,7 @@ class Messaging {
     });
   }
 
-  _broadcast(eventName, data) {
+  _broadcast = (eventName, data) => {
     if (!this.handlers[eventName]) {
       return;
     }
@@ -156,7 +150,7 @@ class Messaging {
     });
   };
 
-  _sendToServer(data) {
+  _sendToServer = (data) => {
     this.serverConnection.send(JSON.stringify({
       ...data,
       gameCode: this.gameCode,
