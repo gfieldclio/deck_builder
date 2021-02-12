@@ -2,6 +2,7 @@
 import Card from '../helpers/card';
 import Dealer from "../helpers/dealer";
 import Zone from '../helpers/zone';
+import Deck from "../helpers/deck";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -16,6 +17,15 @@ export default class Game extends Phaser.Scene {
 
   create() {
     let self = this;
+
+    debugger;
+
+    
+    let mainDeck = new Deck(true);
+    
+
+    let myDrawPile = new Deck();
+    let myDiscardPile = new Deck();
 
     this.isPlayerOne = false;
 
@@ -46,7 +56,7 @@ export default class Game extends Phaser.Scene {
 
     this.input.on('drop', function (pointer, gameObject, dropZone) {
       dropZone.data.values.cards++;
-      gameObject.x = (dropZone.x - 350) + (dropZone.data.values.cards * 50);
+      gameObject.x = (dropZone.x - 300) + (dropZone.data.values.cards * 50);
       gameObject.y = dropZone.y;
       gameObject.disableInteractive();
     })

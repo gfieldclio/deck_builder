@@ -1,28 +1,13 @@
 import Card from './card'
 
-export default class Dealer {
+export default class Shop {
   constructor(scene) {
-    this.dealCards = () => {
-      let playerSprite;
-      let opponentSprite;
+  }
 
-      playerSprite = "logo"
-
-      // if (scene.isPlayerA) {
-      //     playerSprite = 'cyanCardFront';
-      //     opponentSprite = 'magentaCardBack';
-      // } else {
-      //     playerSprite = 'magentaCardFront';
-      //     opponentSprite = 'cyanCardBack';
-      // };
-
-      for (let i = 0; i < 5; i++) {
-          let playerCard = new Card(scene);
-          playerCard.render(475 + (i * 100), 650, playerSprite);
-
-          // let opponentCard = new Card(scene);
-          // scene.opponentCards.push(opponentCard.render(475 + (i * 100), 125, opponentSprite).disableInteractive());
-      }
+  renderShop (cards) {
+    for (let i = 0; i < cards.length; i++) {
+      let playerCard = new Card(scene);
+      playerCard.render(430 + i * 100, 650, cards[i]);
     }
   }
 }

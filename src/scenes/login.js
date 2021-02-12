@@ -10,7 +10,7 @@ export default class Login extends Phaser.Scene {
   }
 
   create() {
-    this.element = this.add.dom(400, 600).createFromCache("loginForm");
+    this.element = this.add.dom(640, 600).createFromCache("loginForm");
     window.element = this.element;
 
     this.element.setPerspective(800);
@@ -19,8 +19,8 @@ export default class Login extends Phaser.Scene {
 
     this.tweens.add({
       targets: this.element,
-      y: 300,
-      duration: 3000,
+      y: 400,
+      duration: 2000,
       ease: "Power3",
     });
   }

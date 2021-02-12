@@ -18,7 +18,7 @@ export default class Loader extends Phaser.Scene {
       frames: this.anims.generateFrameNumbers("loader"),
       frameRate: 16,
     });
-    this.add.sprite(400, 300, "loader").play({ key: "loading", repeat: -1 });
+    this.add.sprite(640, 360, "loader").play({ key: "loading", repeat: -1 });
 
     if (messaging.dataChannelIsOpen) {
       this.scene.start("Game");
