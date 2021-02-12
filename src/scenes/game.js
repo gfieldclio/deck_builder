@@ -1,7 +1,8 @@
 import Card from "../helpers/card";
-import Dealer from "../helpers/dealer";
+import TradeRow from "../helpers/trade-row";
 import Zone from "../helpers/zone";
 import Deck from "../helpers/deck";
+import ExplorerPile from "../helpers/explorer-pile";
 
 import DrawPile from "../helpers/draw-pile";
 
@@ -18,9 +19,11 @@ export default class Game extends Phaser.Scene {
   };
 
   create = () => {
-    new DrawPile(this);
+    let pile = new DrawPile(this);
+    let explorerPile = new ExplorerPile(this);
 
-    let mainDeck = new Deck(true);
+    let tradeRow = new TradeRow(pile.draw(5));
+
 
     let myDrawPile = new Deck();
     let myDiscardPile = new Deck();
@@ -31,8 +34,27 @@ export default class Game extends Phaser.Scene {
     this.dropZone = this.zone.renderZone();
     this.outline = this.zone.renderOutline(this.dropZone);
 
-    this.dealer = new Dealer(this);
-    this.dealer.dealCards();
+    let lastTime = 0;
+    let expandedCard = null;
+    this.input.on("pointerdown", (pointer, gameObject) => {
+      let clickDelay = this.time.now - lastTime;
+      lastTime = this.time.now;
+      
+      if (clickDelay < 350) {
+        if (expandedCard) {
+          expandedCard.resetScale();
+        }
+
+        let card = gameObject[0];
+        if ((!card || expandedCard === card)) {
+          expandedCard = null;
+          return;
+        }
+
+        expandedCard = card;
+        expandedCard.scale = 1;
+      }
+    });
 
     this.input.on("drag", (pointer, gameObject, dragX, dragY) => {
       gameObject.x = dragX;
@@ -41,6 +63,7 @@ export default class Game extends Phaser.Scene {
 
     this.input.on("dragstart", (pointer, gameObject) => {
       gameObject.setTint(0xff69b4);
+      gameObject.resetScale();
       this.children.bringToTop(gameObject);
     });
 
@@ -57,6 +80,7 @@ export default class Game extends Phaser.Scene {
       gameObject.x = dropZone.x - 300 + dropZone.data.values.cards * 50;
       gameObject.y = dropZone.y;
       gameObject.disableInteractive();
+      tradeRow.replaceCard(gameObject, pile.draw()[0]);
     });
   };
 }

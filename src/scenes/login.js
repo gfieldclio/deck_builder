@@ -10,6 +10,8 @@ export default class Login extends Phaser.Scene {
   };
 
   create = () => {
+    this.scene.start("Game");
+
     this.element = this.add.dom(640, 600).createFromCache("loginForm");
     window.element = this.element;
 

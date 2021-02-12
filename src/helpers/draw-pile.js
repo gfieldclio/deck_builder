@@ -46,4 +46,9 @@ export default class DrawPile {
 
     this.cards = shuffledCards;
   }
+
+  draw(count = 1)
+  {
+    return this.cards.splice(Math.max(this.cards.length - count, 0));
+  }
 }
