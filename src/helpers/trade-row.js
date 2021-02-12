@@ -16,4 +16,8 @@ export default class TradeRow {
     this.setTradeRowCardVisibility(newCard, cardIndex);
     this.cards[cardIndex] = newCard;
   }
+
+  contains = (card) => {
+    return this.cards.includes(card);
+  }
 }

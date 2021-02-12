@@ -1,11 +1,10 @@
-import Card from "../helpers/card";
 import TradeRow from "../helpers/trade-row";
 import Zone from "../helpers/zone";
-import Deck from "../helpers/deck";
-import ExplorerPile from "../helpers/explorer-pile";
 
-import DrawPile from "../helpers/draw-pile";
-import Store from "../groups/decks/store";
+import TradeDeck from "../groups/decks/trade";
+import ExplorerDeck from "../groups/decks/explorer";
+import DrawPileDeck from "../groups/decks/draw-pile";
+import DiscardPileDeck from "../groups/decks/discard-pile";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -20,19 +19,28 @@ export default class Game extends Phaser.Scene {
   };
 
   create = () => {
-    new Store({
+    this.tradeDeck = new TradeDeck({
       scene: this,
-      x: 50,
-      y: 50,
+      x: 280,
+      y: 300,
     })
-    let pile = new DrawPile(this);
-    let explorerPile = new ExplorerPile(this);
+    this.explorerDeck = new ExplorerDeck({
+      scene: this,
+      x: 1200,
+      y: 300,
+    })
+    this.drawPile = new DrawPileDeck({
+      scene: this,
+      x: 1050,
+      y: 550,
+    })
+    this.discardPile = new DiscardPileDeck({
+      scene: this,
+      x: 1200,
+      y: 550,
+    })
 
-    let tradeRow = new TradeRow(pile.draw(5));
-
-
-    let myDrawPile = new Deck();
-    let myDiscardPile = new Deck();
+    this.tradeRow = new TradeRow(this.tradeDeck.draw(5));
 
     this.isPlayerOne = false;
 
@@ -48,7 +56,7 @@ export default class Game extends Phaser.Scene {
 
       if (clickDelay < 350) {
         if (expandedCard) {
-          expandedCard.resetScale();
+          expandedCard.zoomOut();
         }
 
         let card = gameObject[0];
@@ -58,7 +66,7 @@ export default class Game extends Phaser.Scene {
         }
 
         expandedCard = card;
-        expandedCard.scale = 1;
+        expandedCard.zoomIn();
       }
     });
 
@@ -69,7 +77,10 @@ export default class Game extends Phaser.Scene {
 
     this.input.on("dragstart", (pointer, gameObject) => {
       gameObject.setTint(0xff69b4);
-      gameObject.resetScale();
+      if (expandedCard === gameObject) {
+        expandedCard.zoomOut();
+        expandedCard = null;
+      }
       this.children.bringToTop(gameObject);
     });
 
@@ -86,7 +97,12 @@ export default class Game extends Phaser.Scene {
       gameObject.x = dropZone.x - 300 + dropZone.data.values.cards * 50;
       gameObject.y = dropZone.y;
       gameObject.disableInteractive();
-      tradeRow.replaceCard(gameObject, pile.draw()[0]);
+
+      if (this.tradeRow.contains(gameObject)) {
+        this.tradeRow.replaceCard(gameObject, this.tradeDeck.draw()[0]);
+      } else if (this.explorerDeck.contains(gameObject)) {
+        this.explorerDeck.draw();
+      }
     });
   };
 }
