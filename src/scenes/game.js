@@ -3,6 +3,8 @@ import Dealer from "../helpers/dealer";
 import Zone from "../helpers/zone";
 import Deck from "../helpers/deck";
 
+import Scout from "../sprites/cards/scout";
+
 export default class Game extends Phaser.Scene {
   constructor() {
     super({ key: "Game" });
@@ -10,12 +12,20 @@ export default class Game extends Phaser.Scene {
 
   preload = () => {
     this.load.image("logo", "src/assets/logo.png");
+    this.load.spritesheet('starRealmsCards', 'src/assets/cards/star-realms-base.jpg', { frameWidth: 409, frameHeight: 568 });
     this.load.image("cardFront", "src/assets/front.png");
     this.load.image("cardBack", "src/assets/back.png");
   };
 
   create = () => {
+    new Test({
+      scene:this,
+      x:200,
+      y:200
+    });
+
     let mainDeck = new Deck(true);
+
     let myDrawPile = new Deck();
     let myDiscardPile = new Deck();
 

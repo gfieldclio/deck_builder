@@ -1,0 +1,443 @@
+[
+  {
+    "name": "Scout",
+    "count": 16,
+    "cost": 0,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Unaligned"
+  },
+  {
+    "name": "Viper",
+    "count": 4,
+    "cost": 0,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Unaligned"
+  },
+  {
+    "name": "Explorer",
+    "count": 10,
+    "cost": 2,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Unaligned"
+  },
+  {
+    "name": "Blob Fighter",
+    "count": 3,
+    "cost": 1,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Blob"
+  },
+  {
+    "name": "Battle Pod",
+    "count": 2,
+    "cost": 2,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Blob"
+  },
+  {
+    "name": "Trade Pod",
+    "count": 3,
+    "cost": 2,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Blob"
+  },
+  {
+    "name": "Ram",
+    "count": 2,
+    "cost": 3,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Blob"
+  },
+  {
+    "name": "Blob Wheel",
+    "count": 3,
+    "cost": 3,
+    "base": true,
+    "outpost": false,
+    "defense": 5,
+    "faction": "Blob"
+  },
+  {
+    "name": "Blob Destroyer",
+    "count": 2,
+    "cost": 4,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Blob"
+  },
+  {
+    "name": "The Hive",
+    "count": 1,
+    "cost": 5,
+    "base": true,
+    "outpost": false,
+    "defense": 5,
+    "faction": "Blob"
+  },
+  {
+    "name": "Blob Carrier",
+    "count": 1,
+    "cost": 6,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Blob"
+  },
+  {
+    "name": "Battle Blob",
+    "count": 1,
+    "cost": 6,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Blob"
+  },
+  {
+    "name": "Mothership",
+    "count": 1,
+    "cost": 7,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Blob"
+  },
+  {
+    "name": "Blob World",
+    "count": 1,
+    "cost": 8,
+    "base": true,
+    "outpost": false,
+    "defense": 7,
+    "faction": "Blob"
+  },
+  {
+    "name": "Federation Shuttle",
+    "count": 3,
+    "cost": 1,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Trade Federation"
+  },
+  {
+    "name": "Cutter",
+    "count": 3,
+    "cost": 2,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Trade Federation"
+  },
+  {
+    "name": "Embassy Yacht",
+    "count": 2,
+    "cost": 3,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Trade Federation"
+  },
+  {
+    "name": "Trading Post",
+    "count": 2,
+    "cost": 3,
+    "base": true,
+    "outpost": true,
+    "defense": 4,
+    "faction": "Trade Federation"
+  },
+  {
+    "name": "Barter World",
+    "count": 2,
+    "cost": 4,
+    "base": true,
+    "outpost": false,
+    "defense": 4,
+    "faction": "Trade Federation"
+  },
+  {
+    "name": "Freighter",
+    "count": 2,
+    "cost": 4,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Trade Federation"
+  },
+  {
+    "name": "Defense Center",
+    "count": 1,
+    "cost": 5,
+    "base": true,
+    "outpost": true,
+    "defense": 5,
+    "faction": "Trade Federation"
+  },
+  {
+    "name": "Trade Escort",
+    "count": 1,
+    "cost": 5,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Trade Federation"
+  },
+  {
+    "name": "Port of Call",
+    "count": 1,
+    "cost": 6,
+    "base": true,
+    "outpost": true,
+    "defense": 6,
+    "faction": "Trade Federation"
+  },
+  {
+    "name": "Flagship",
+    "count": 1,
+    "cost": 6,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Trade Federation"
+  },
+  {
+    "name": "Central Office",
+    "count": 1,
+    "cost": 7,
+    "base": true,
+    "outpost": false,
+    "defense": 6,
+    "faction": "Trade Federation"
+  },
+  {
+    "name": "Command Ship",
+    "count": 1,
+    "cost": 8,
+    "base": false,
+    "outpost": false,
+    "defense": "",
+    "faction": "Trade Federation"
+  },
+  {
+    "name": "Trade Bot",
+    "count": 3,
+    "cost": 1,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Machine Cult"
+  },
+  {
+    "name": "Missle Bot",
+    "count": 3,
+    "cost": 2,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Machine Cult"
+  },
+  {
+    "name": "Battle Station",
+    "count": 2,
+    "cost": 3,
+    "base": true,
+    "outpost": true,
+    "defense": 5,
+    "faction": "Machine Cult"
+  },
+  {
+    "name": "Supply Bot",
+    "count": 3,
+    "cost": 3,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Machine Cult"
+  },
+  {
+    "name": "Patrol Mech",
+    "count": 2,
+    "cost": 4,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Machine Cult"
+  },
+  {
+    "name": "Stealth Needle",
+    "count": 1,
+    "cost": 4,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Machine Cult"
+  },
+  {
+    "name": "Mech World",
+    "count": 1,
+    "cost": 5,
+    "base": true,
+    "outpost": true,
+    "defense": 6,
+    "faction": "Machine Cult"
+  },
+  {
+    "name": "Battle Mech",
+    "count": 1,
+    "cost": 5,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Machine Cult"
+  },
+  {
+    "name": "Junkyard",
+    "count": 1,
+    "cost": 6,
+    "base": true,
+    "outpost": true,
+    "defense": 5,
+    "faction": "Machine Cult"
+  },
+  {
+    "name": "Missle Mech",
+    "count": 1,
+    "cost": 6,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Machine Cult"
+  },
+  {
+    "name": "Machine Base",
+    "count": 1,
+    "cost": 7,
+    "base": true,
+    "outpost": true,
+    "defense": 6,
+    "faction": "Machine Cult"
+  },
+  {
+    "name": "Brain World",
+    "count": 1,
+    "cost": 8,
+    "base": true,
+    "outpost": true,
+    "defense": 6,
+    "faction": "Machine Cult"
+  },
+  {
+    "name": "Imperial Fighter",
+    "count": 3,
+    "cost": 1,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Star Empire"
+  },
+  {
+    "name": "Corvette",
+    "count": 2,
+    "cost": 2,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Star Empire"
+  },
+  {
+    "name": "Survey Ship",
+    "count": 3,
+    "cost": 3,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Star Empire"
+  },
+  {
+    "name": "Imperial Frigate",
+    "count": 3,
+    "cost": 3,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Star Empire"
+  },
+  {
+    "name": "Space Station",
+    "count": 2,
+    "cost": 4,
+    "base": true,
+    "outpost": true,
+    "defense": 4,
+    "faction": "Star Empire"
+  },
+  {
+    "name": "Recycling Station",
+    "count": 2,
+    "cost": 4,
+    "base": true,
+    "outpost": true,
+    "defense": 4,
+    "faction": "Star Empire"
+  },
+  {
+    "name": "War World",
+    "count": 1,
+    "cost": 5,
+    "base": true,
+    "outpost": true,
+    "defense": 4,
+    "faction": "Star Empire"
+  },
+  {
+    "name": "Royal Redoubt",
+    "count": 1,
+    "cost": 6,
+    "base": true,
+    "outpost": true,
+    "defense": 6,
+    "faction": "Star Empire"
+  },
+  {
+    "name": "Battlecruiser",
+    "count": 1,
+    "cost": 6,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Star Empire"
+  },
+  {
+    "name": "Dreadnaught",
+    "count": 1,
+    "cost": 7,
+    "base": false,
+    "outpost": false,
+    "defense": null,
+    "faction": "Star Empire"
+  },
+  {
+    "name": "Fleet HQ",
+    "count": 1,
+    "cost": 8,
+    "base": true,
+    "outpost": false,
+    "defense": 8,
+    "faction": "Star Empire"
+  }
+]
