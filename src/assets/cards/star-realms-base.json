@@ -243,7 +243,7 @@
     "faction": "Machine Cult"
   },
   {
-    "name": "Missle Bot",
+    "name": "Missile Bot",
     "count": 3,
     "cost": 2,
     "base": false,
@@ -315,7 +315,7 @@
     "faction": "Machine Cult"
   },
   {
-    "name": "Missle Mech",
+    "name": "Missile Mech",
     "count": 1,
     "cost": 6,
     "base": false,

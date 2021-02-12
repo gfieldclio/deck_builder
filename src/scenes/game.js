@@ -3,7 +3,7 @@ import Dealer from "../helpers/dealer";
 import Zone from "../helpers/zone";
 import Deck from "../helpers/deck";
 
-import Scout from "../sprites/cards/scout";
+import DrawPile from "../helpers/draw-pile";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -18,11 +18,7 @@ export default class Game extends Phaser.Scene {
   };
 
   create = () => {
-    new Test({
-      scene:this,
-      x:200,
-      y:200
-    });
+    new DrawPile(this);
 
     let mainDeck = new Deck(true);
 
