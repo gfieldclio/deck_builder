@@ -18,6 +18,8 @@ export default class Store extends Base {
       );
     });
 
+    window.test = config.cards;
+
     super(config)
   }
 }
