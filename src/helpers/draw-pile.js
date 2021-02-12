@@ -12,8 +12,6 @@ export default class DrawPile {
       const classFile = data.name.toLowerCase().split(" ").join("-");
       const Klass = require(`../sprites/cards/${classFile}`).default;
 
-      console.log(data.count);
-      console.log(Array.from(data.count));
       Array.from({ length: data.count }).forEach((_i) => {
         this.cards.push(
           new Klass({
@@ -26,8 +24,6 @@ export default class DrawPile {
     });
 
     this.shuffle();
-
-    console.log(this.cards);
   }
 
   shuffle = () => {

@@ -2,7 +2,7 @@ import cardData from '../../assets/cards/star-realms-base.json';
 
 export default class Base extends Phaser.GameObjects.Sprite {
   baseScale = 0.35;
-  
+
   constructor(config, index) {
     super(config.scene, config.x, config.y, "starRealmsCards", index);
 
@@ -14,8 +14,6 @@ export default class Base extends Phaser.GameObjects.Sprite {
     this.scene.add.existing(this);
     this.setInteractive();
     this.scene.input.setDraggable(this);
-
-    window.test = this;
   }
 
   resetScale = () => {

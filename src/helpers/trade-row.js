@@ -1,5 +1,6 @@
 export default class TradeRow {
   constructor(cards) {
+    console.log(cards)
     this.cards = [...cards];
     this.cards.forEach((card, i) => this.setTradeRowCardVisibility(card, i));
   }

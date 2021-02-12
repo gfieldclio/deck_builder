@@ -5,6 +5,7 @@ import Deck from "../helpers/deck";
 import ExplorerPile from "../helpers/explorer-pile";
 
 import DrawPile from "../helpers/draw-pile";
+import Store from "../groups/decks/store";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -19,6 +20,11 @@ export default class Game extends Phaser.Scene {
   };
 
   create = () => {
+    new Store({
+      scene: this,
+      x: 50,
+      y: 50,
+    })
     let pile = new DrawPile(this);
     let explorerPile = new ExplorerPile(this);
 
@@ -39,7 +45,7 @@ export default class Game extends Phaser.Scene {
     this.input.on("pointerdown", (pointer, gameObject) => {
       let clickDelay = this.time.now - lastTime;
       lastTime = this.time.now;
-      
+
       if (clickDelay < 350) {
         if (expandedCard) {
           expandedCard.resetScale();
