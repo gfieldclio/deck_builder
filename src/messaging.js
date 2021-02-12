@@ -26,11 +26,10 @@ class Messaging {
 
   join(gameCode, name) {
     this.gameCode = gameCode;
+    this.name = name;
 
     this._sendToServer({
       type: 'join',
-      gameCode,
-      name,
     });
   };
 
@@ -39,21 +38,21 @@ class Messaging {
   }
 
   _handleMessage(message) {
-    console.log('Got message', message.data);
     const data = JSON.parse(message.data);
+    console.log('Got message', data);
 
     switch (data.type) {
       case 'joined':
-        this._sendToServerWebRTCOffer();
+        this._sendWebRTCOffer();
         break;
       case 'offer':
-        this._handleWebRTCOffer(message.offer);
+        this._handleWebRTCOffer(data.offer);
         break;
       case 'answer':
-        this._handleWebRTCAnswer(message.answer);
+        this._handleWebRTCAnswer(data.answer);
         break;
       case 'candidate':
-        this._handleWebRTCCandidate(message.candidate);
+        this._handleWebRTCCandidate(data.candidate);
         break;
       default:
         break;
@@ -62,40 +61,56 @@ class Messaging {
     this._broadcast(data.type, data);
   };
 
-  async _sendWebRTCOffer() {
+  _sendWebRTCOffer() {
+    let offer;
     this._createWebRTCConnection();
-    const offer = await peerConnection.createOffer();
-    await this.peerConnection.setLocalDescription(offer);
+    this.dataChannel = this.peerConnection.createDataChannel('data', { reliable: true });
+    this._listenToDataChannel();
+    this.peerConnection.createOffer().then(createdOffer => {
+      offer = createdOffer;
 
-    this._sendToServer({
-      gameCode: this.gameCode,
-      offer,
-      type: 'offer',
+      return this.peerConnection.setLocalDescription(offer);
+    }).then(() => {
+      this._sendToServer({
+        offer,
+        type: 'offer',
+      });
     });
   };
 
-  async _handleWebRTCOffer(offer) {
+  _handleWebRTCOffer(offer) {
+    let answer;
     this._createWebRTCConnection();
+    this.peerConnection.onicecandidate = event => {
+      console.log('onicecandidate', event);
+      if (event.candidate) {
+        this._sendToServer({
+          candidate: event.candidate,
+          type: 'candidate',
+        });
+      }
+    };
+
     this.peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
-    const answer = await peerConnection.createAnswer();
-    await this.peerConnection.setLocalDescription(answer);
+    this.peerConnection.createAnswer().then(createdAnswer => {
+      answer = createdAnswer;
 
-    this._sendToServer({
-      gameCode: this.gameCode,
-      answer,
-      type: 'answer',
+      return this.peerConnection.setLocalDescription(answer)
+    }).then(() => {
+      this._sendToServer({
+        answer,
+        type: 'answer',
+      });
     });
   };
 
-  async _handleWebRTCAnswer() {
-    const remoteDesc = new RTCSessionDescription(message.answer);
-    await this.peerConnection.setRemoteDescription(remoteDesc);
-
-    this.dataChannel = this.peerConnection.createDataChannel();
+  _handleWebRTCAnswer(answer) {
+    const remoteDesc = new RTCSessionDescription(answer);
+    this.peerConnection.setRemoteDescription(remoteDesc);
   }
 
-  async _handleWebRTCCandidate() {
-    await this.peerConnection.addIceCandidate(message.iceCandidate);
+  _handleWebRTCCandidate(candidate) {
+    return this.peerConnection.addIceCandidate(candidate);
   }
 
   _createWebRTCConnection() {
@@ -104,33 +119,29 @@ class Messaging {
     };
     this.peerConnection = new RTCPeerConnection(configuration);
 
-    this.peerConnection.addEventListener('icecandidate', event => {
-      if (event.candidate) {
-        this._sendToServer({
-          gameCode: this.gameCode,
-          candidate: event.candidate,
-          type: 'candidate',
-        });
-      }
-    });
-
     this.peerConnection.addEventListener('connectionstatechange', event => {
+      console.log('connectionstatechange', event, this.peerConnection.connectionState === 'connected');
       if (this.peerConnection.connectionState === 'connected') {
         this._broadcast('connected', event);
       }
     });
 
     this.peerConnection.addEventListener('datachannel', event => {
+      console.log('datachannel', event);
       this.dataChannel = event.channel;
+      this._listenToDataChannel();
     });
   };
 
   _listenToDataChannel() {
     this.dataChannel.addEventListener('open', event => {
+      console.log('dataChannelOpen', event);
+      this.dataChannelIsOpen = true;
       this._broadcast('dataChannelOpen', event);
     });
 
     this.dataChannel.addEventListener('close', event => {
+      console.log('dataChannelClose', event);
       this._broadcast('dataChannelClose', event);
     });
   }
@@ -146,7 +157,11 @@ class Messaging {
   };
 
   _sendToServer(data) {
-    this.serverConnection.send(JSON.stringify(data));
+    this.serverConnection.send(JSON.stringify({
+      ...data,
+      gameCode: this.gameCode,
+      name: this.name,
+    }));
   };
 }
 

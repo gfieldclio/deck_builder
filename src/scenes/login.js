@@ -52,29 +52,25 @@ export default class Login extends Phaser.Scene {
 
   handleJoin(event) {
     if (event.success) {
-        //  Tween the login form out
-        this.tweens.add({ targets: element.rotate3d, x: 1, w: 90, duration: 3000, ease: "Power3" });
+      //  Tween the login form out
+      this.tweens.add({ targets: element.rotate3d, x: 1, w: 90, duration: 3000, ease: "Power3" });
 
-        this.tweens.add({
-          targets: element,
-          scaleX: 2,
-          scaleY: 2,
-          y: 700,
-          duration: 3000,
-          ease: "Power3",
-          onComplete: function () {
-            element.setVisible(false);
-          },
-        });
+      this.tweens.add({
+        targets: element,
+        scaleX: 2,
+        scaleY: 2,
+        y: 700,
+        duration: 3000,
+        ease: "Power3",
+        onComplete: function () {
+          element.setVisible(false);
+        },
+      });
 
-        this.cameras.main.fadeOut(1000, 0, 0, 0);
-        console.log(this);
-        const self = this;
-        this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
-          console.log(this);
-          console.log(this === self);
-          this.scene.start("Loader");
-        });
+      this.cameras.main.fadeOut(1000, 0, 0, 0);
+      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
+        this.scene.start("Loader");
+      });
     } else {
       let text = this.element.add.text(10, 10, "Connection failed", {
         color: "white",

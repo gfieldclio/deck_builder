@@ -29,7 +29,7 @@ wss.on("connection", function (connection) {
         var game = games[data.gameCode];
 
         if (game) {
-          if (game.players.length === 1 && !game.players[data.name]) {
+          if (Object.keys(game.players).length === 1 && !game.players[data.name]) {
             console.log("Joining game: ", data.gameCode);
 
             game.players[data.name] = connection;
@@ -40,7 +40,7 @@ wss.on("connection", function (connection) {
               success: true,
             });
           } else {
-            if (game.players.length !== 1) {
+            if (Object.keys(game.players).length !== 1) {
               console.log("Join failed due to game full: ", data.gameCode);
             } else {
               console.log("Join failed due to name taken: ", data.gameCode);
@@ -56,6 +56,7 @@ wss.on("connection", function (connection) {
 
           var game = { players: {} };
           game.players[data.name] = connection;
+          games[data.gameCode] = game;
           connection.gameCode = data.gameCode;
 
           sendTo(connection, {
@@ -69,7 +70,7 @@ wss.on("connection", function (connection) {
       case "offer":
         var game = games[data.gameCode];
 
-        if (game && game.players.length === 2) {
+        if (game && Object.keys(game.players).length === 2) {
           console.log(
             `Sending offer from player ${data.name} for ${data.gameCode}`
           );
@@ -91,9 +92,9 @@ wss.on("connection", function (connection) {
         break;
 
       case "answer":
-        var game = game[data.gameCode];
+        var game = games[data.gameCode];
 
-        if (game && game.players === 2) {
+        if (game && Object.keys(game.players).length === 2) {
           console.log(`Sending answer from ${data.name} for ${data.gameCode}`);
 
           var otherConnection = otherPlayerConnection(game, data.name);
@@ -113,9 +114,9 @@ wss.on("connection", function (connection) {
         break;
 
       case "candidate":
-        var game = game[data.gameCode];
+        var game = games[data.gameCode];
 
-        if (game && game.players === 2) {
+        if (game && Object.keys(game.players).length === 2) {
           console.log(
             `Sending candidate from ${data.name} for ${data.gameCode}`
           );
@@ -137,9 +138,9 @@ wss.on("connection", function (connection) {
         break;
 
       case "leave":
-        var game = game[data.gameCode];
+        var game = games[data.gameCode];
 
-        if (game && game.players === 2) {
+        if (game && Object.keys(game.players).length === 2) {
           console.log(`Player ${data.name} is leaving game ${data.gameCode}`);
 
           var otherConnection = otherPlayerConnection(game, data.name);

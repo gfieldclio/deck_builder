@@ -1,3 +1,5 @@
+import messaging from "../messaging";
+
 export default class Loader extends Phaser.Scene {
   constructor() {
     super({ key: "Loader" });
@@ -17,6 +19,15 @@ export default class Loader extends Phaser.Scene {
       frameRate: 16,
     });
     this.add.sprite(400, 300, "loader").play({ key: "loading", repeat: -1 });
+
+    if (messaging.dataChannelIsOpen) {
+      this.scene.start("Game");
+    } else {
+      messaging.on('dataChannelOpen', () => {
+        console.log('Release the hounds!');
+        this.scene.start("Game");
+      });
+    }
   }
 
   update() {}
