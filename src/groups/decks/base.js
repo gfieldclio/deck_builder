@@ -1,21 +1,22 @@
 import CardBack from "../../sprites/card-back";
 
 export default class Deck extends Phaser.GameObjects.Group {
+  width = 409 * 0.35;
+  height = 568 * 0.35;
+
   constructor(config) {
     super(config.scene, config.cards);
 
     this.empty = this.scene.add.graphics();
     this.empty.lineStyle(4, 0xff69b4);
-    const width = 409 * 0.35;
-    const height = 568 * 0.35;
+
     this.empty.strokeRect(
-      config.x - width / 2,
-      config.y - height / 2,
-      width,
-      height
+      config.x - this.width / 2,
+      config.y - this.height / 2,
+      this.width,
+      this.height
     );
     this.add(this.empty);
-
     this.faceDown =
       config.faceDown === null || config.faceDown === undefined
         ? true
@@ -29,8 +30,18 @@ export default class Deck extends Phaser.GameObjects.Group {
       this.add(this.faceDownCard);
     }
 
+    if (config.droppable)
+    {
+      this.renderZone();
+    }
     this.shuffle();
     this.render();
+  }
+
+  renderZone = () => {
+    this.dropZone = this.scene.add
+      .zone(640, 500, this.width, this.height)
+      .setRectangleDropZone(this.width, this.height);
   }
 
   render = () => {

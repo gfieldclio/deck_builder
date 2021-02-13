@@ -22,6 +22,9 @@ export default class Base extends Phaser.GameObjects.Sprite {
     if (config.angle) {
       this.angle = config.angle;
     }
+    if (config.depth) {
+      this.setDepth(config.depth);
+    }
 
     this.scene.add.existing(this);
 
@@ -54,13 +57,14 @@ export default class Base extends Phaser.GameObjects.Sprite {
         const Klass = this.constructor;
 
         this.zoomedSprite = new Klass({
-          scene: this.scene,
-          x: 640,
-          y: 360,
-          visible: true,
+          angle: cardData[this.cardIndex].base ? 90 : 0,
+          depth: 999,
           interactive: false,
           scale: this.zoomScale,
-          angle: cardData[this.cardIndex].base ? 90 : 0,
+          scene: this.scene,
+          visible: true,
+          x: 640,
+          y: 360,
         })
       }
     } else if (this.zoomedSprite) {

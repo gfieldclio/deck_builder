@@ -33,22 +33,23 @@ export default class Game extends Phaser.Scene {
       scene: this,
       x: 280,
       y: 300,
-    })
+    });
     this.explorerDeck = new ExplorerDeck({
       scene: this,
       x: 1200,
       y: 300,
-    })
+    });
     this.drawPile = new DrawPileDeck({
       scene: this,
       x: 1050,
       y: 550,
-    })
+    });
     this.discardPile = new DiscardPileDeck({
       scene: this,
       x: 1200,
       y: 550,
-    })
+      droppable: true,
+    });
 
     this.tradeRow = new TradeRow(this.tradeDeck.draw(5));
     this.playerHand = new PlayerHand(this.drawPile.draw(5));
